@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Познай себя — Психологический опросник</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#080f0a;color:#dff0df;overflow-x:hidden;min-height:100vh}
+
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:40px 20px 60px;
+  text-align:center;
+}
+
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:#7dc47f;background:rgba(125,196,127,.1);
+  border:1px solid rgba(125,196,127,.22);border-radius:100px;
+  padding:7px 18px;margin-bottom:32px;
+  animation:fadeUp .8s ease .1s both;
+}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:#7dc47f;animation:blink 2.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+.hero-title{
+  font-family:'Lora',serif;
+  font-size:clamp(36px,7vw,72px);
+  font-weight:500;line-height:1.1;
+  color:#dff0df;
+  margin-bottom:24px;
+  animation:fadeUp .8s ease .2s both;
+}
+.hero-title em{font-style:italic;color:#7dc47f}
+.hero-title .line2{display:block;opacity:.75}
+
+.hero-sub{
+  font-size:clamp(15px,2.5vw,19px);
+  line-height:1.75;color:rgba(210,235,210,.55);
+  max-width:560px;margin:0 auto 48px;
+  animation:fadeUp .8s ease .3s both;
+}
+.hero-sub b{color:rgba(210,235,210,.85);font-weight:500}
+
+.cta-group{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  animation:fadeUp .8s ease .4s both;
+}
+.btn-main{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:18px 40px;
+  background:linear-gradient(135deg,#2a6030,#4a9c4d);
+  color:#fff;font-family:'Inter',sans-serif;
+  font-size:16px;font-weight:600;letter-spacing:.03em;
+  border:none;border-radius:14px;cursor:pointer;
+  text-decoration:none;
+  box-shadow:0 8px 32px rgba(74,156,77,.35);
+  transition:all .25s;
+}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(74,156,77,.45)}
+.btn-main:active{transform:none}
+.btn-arrow{font-size:18px;transition:transform .25s}
+.btn-main:hover .btn-arrow{transform:translateX(4px)}
+
+.cta-hint{font-size:12px;color:rgba(210,235,210,.3);letter-spacing:.04em}
+
+/* ── SCROLL INDICATOR ── */
+.scroll-hint{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  animation:fadeUp .8s ease .8s both;
+}
+.scroll-hint span{font-size:11px;color:rgba(210,235,210,.28);letter-spacing:.1em;text-transform:uppercase}
+.scroll-mouse{
+  width:22px;height:34px;border:1.5px solid rgba(210,235,210,.2);
+  border-radius:11px;display:flex;justify-content:center;padding-top:6px;
+}
+.scroll-wheel{
+  width:3px;height:6px;background:rgba(125,196,127,.6);
+  border-radius:2px;animation:scroll 1.8s ease-in-out infinite;
+}
+@keyframes scroll{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(10px)}}
+
+/* ── FEATURES SECTION ── */
+.features{
+  position:relative;z-index:1;
+  padding:80px 20px 100px;
+  max-width:1000px;margin:0 auto;
+}
+.features-title{
+  font-family:'Lora',serif;font-size:clamp(24px,4vw,38px);
+  font-weight:500;text-align:center;color:#dff0df;
+  margin-bottom:12px;
+}
+.features-sub{
+  font-size:15px;color:rgba(210,235,210,.45);
+  text-align:center;margin-bottom:56px;line-height:1.7;
+}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.feat-card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(100,180,110,.13);
+  border-radius:18px;padding:28px 24px;
+  transition:all .25s;
+}
+.feat-card:hover{
+  background:rgba(255,255,255,.055);
+  border-color:rgba(100,200,110,.28);
+  transform:translateY(-4px);
+}
+.feat-icon{font-size:28px;margin-bottom:16px;display:block}
+.feat-name{font-size:15px;font-weight:600;color:#dff0df;margin-bottom:8px}
+.feat-desc{font-size:13px;color:rgba(210,235,210,.48);line-height:1.65}
+
+/* ── STEPS SECTION ── */
+.steps-section{
+  position:relative;z-index:1;
+  padding:0 20px 100px;
+  max-width:700px;margin:0 auto;
+}
+.steps-title{
+  font-family:'Lora',serif;font-size:clamp(22px,3.5vw,34px);
+  font-weight:500;text-align:center;color:#dff0df;margin-bottom:48px;
+}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:20px;align-items:flex-start}
+.step-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.step-num{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(125,196,127,.1);border:1px solid rgba(125,196,127,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:700;color:#7dc47f;flex-shrink:0;
+}
+.step-line{width:1px;flex:1;min-height:24px;background:rgba(125,196,127,.15);margin:4px 0}
+.step-body{padding:6px 0 32px}
+.step-name{font-size:15px;font-weight:600;color:#dff0df;margin-bottom:5px}
+.step-text{font-size:13px;color:rgba(210,235,210,.48);line-height:1.65}
+
+/* ── PRIVACY SECTION ── */
+.privacy-section{
+  position:relative;z-index:1;
+  padding:0 20px 80px;
+  max-width:680px;margin:0 auto;
+}
+.privacy-card{
+  background:rgba(125,196,127,.05);
+  border:1px solid rgba(125,196,127,.16);
+  border-radius:20px;padding:36px 36px;
+  text-align:center;
+}
+.privacy-card h3{
+  font-family:'Lora',serif;font-size:24px;font-weight:500;
+  color:#dff0df;margin-bottom:10px;
+}
+.privacy-card p{font-size:14px;color:rgba(210,235,210,.48);line-height:1.7;margin-bottom:28px}
+.privacy-list{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  text-align:left;margin-bottom:36px;
+}
+@media(max-width:500px){.privacy-list{grid-template-columns:1fr}}
+.priv-item{
+  display:flex;align-items:flex-start;gap:9px;
+  font-size:13px;color:rgba(210,235,210,.5);line-height:1.5;
+}
+.priv-item::before{content:'✦';color:#4a9c4d;font-size:10px;margin-top:3px;flex-shrink:0}
+
+/* ── FOOTER CTA ── */
+.footer-cta{
+  position:relative;z-index:1;
+  padding:0 20px 80px;
+  max-width:600px;margin:0 auto;
+  text-align:center;
+}
+.footer-cta h2{
+  font-family:'Lora',serif;font-size:clamp(22px,4vw,36px);
+  font-weight:500;color:#dff0df;margin-bottom:12px;
+}
+.footer-cta p{font-size:15px;color:rgba(210,235,210,.45);margin-bottom:32px;line-height:1.7}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid rgba(100,180,110,.1);
+  padding:24px 20px;text-align:center;
+  font-size:12px;color:rgba(210,235,210,.22);
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<!-- ════════ HERO ════════ -->
+<section class="hero">
+  <div class="badge"><span class="badge-dot"></span>Психологическое исследование</div>
+
+  <h1 class="hero-title">
+    Загляните<br>
+    <em>внутрь себя</em>
+    <span class="line2">и откройте новое</span>
+  </h1>
+
+  <p class="hero-sub">
+    Короткий опросник, который поможет лучше понять<br>
+    <b>ваши внутренние состояния, ценности и ресурсы.</b><br>
+    Без правильных или неправильных ответов.
+  </p>
+
+  <div class="cta-group">
+    <a href="quiz.html" class="btn-main">
+      Начать опросник
+      <span class="btn-arrow">→</span>
+    </a>
+    <span class="cta-hint">🔒 Анонимно · ≈5 минут · Бесплатно</span>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Узнать больше</span>
+    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+  </div>
+</section>
+
+<!-- ════════ FEATURES ════════ -->
+<section class="features">
+  <h2 class="features-title reveal">Зачем проходить опросник?</h2>
+  <p class="features-sub reveal">Это не тест с оценками — это инструмент для понимания себя</p>
+  <div class="cards">
+    <div class="feat-card reveal">
+      <span class="feat-icon">🧠</span>
+      <div class="feat-name">Понять себя глубже</div>
+      <div class="feat-desc">Опросник помогает увидеть паттерны мышления и поведения, которые обычно остаются незамеченными в повседневной жизни.</div>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">🌱</span>
+      <div class="feat-name">Найти точки роста</div>
+      <div class="feat-desc">Честные ответы помогают выявить области, где возможен личностный рост и развитие — без осуждения и давления.</div>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">⚡</span>
+      <div class="feat-name">Быстро и просто</div>
+      <div class="feat-desc">Всего несколько минут — и вы уже лучше понимаете свои реакции, ценности и внутренние ресурсы.</div>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">🔒</span>
+      <div class="feat-name">Полная анонимность</div>
+      <div class="feat-desc">Ваши ответы не привязаны к личности. Никаких имён, контактов и личных данных — только честные ответы.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ STEPS ════════ -->
+<section class="steps-section">
+  <h2 class="steps-title reveal">Как это работает</h2>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-name">Прочитайте и примите условия</div>
+        <div class="step-text">Перед началом — короткое соглашение об анонимной обработке данных. Никаких сюрпризов, всё прозрачно.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-name">Отвечайте честно и интуитивно</div>
+        <div class="step-text">Выберите вариант который первым приходит в голову. Не анализируйте — доверяйте первому ощущению.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-name">Переход происходит автоматически</div>
+        <div class="step-text">После каждого выбора опросник сам переходит к следующему вопросу. Кнопок «Далее» нет — всё плавно и быстро.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-left"><div class="step-num">4</div></div>
+      <div class="step-body">
+        <div class="step-name">Готово — ваши ответы сохранены</div>
+        <div class="step-text">После последнего вопроса данные автоматически сохраняются. Всё, вы молодцы!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PRIVACY ════════ -->
+<section class="privacy-section">
+  <div class="privacy-card reveal">
+    <h3>🌿 Мы ценим вашу приватность</h3>
+    <p>Участие полностью добровольно. Вы можете остановиться в любой момент без каких-либо последствий.</p>
+    <div class="privacy-list">
+      <div class="priv-item">Ответы анонимны и не привязаны к личности</div>
+      <div class="priv-item">Данные используются только для исследования</div>
+      <div class="priv-item">Никакой рекламы и передачи третьим лицам</div>
+      <div class="priv-item">Данные хранятся не более 12 месяцев</div>
+      <div class="priv-item">Можно остановиться в любой момент</div>
+      <div class="priv-item">Можно запросить удаление своих данных</div>
+    </div>
+    <a href="quiz.html" class="btn-main" style="display:inline-flex">
+      Я готов(а) — начать
+      <span class="btn-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ════════ FOOTER CTA ════════ -->
+<section class="footer-cta">
+  <h2 class="reveal">Готовы узнать себя лучше?</h2>
+  <p class="reveal">Это займёт всего несколько минут, а результат останется с вами надолго.</p>
+  <a href="quiz.html" class="btn-main reveal">
+    Пройти опросник →
+  </a>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+<footer>
+  <p>© 2026 Психологический опросник · Все данные анонимны и защищены</p>
+</footer>
+
+<script>
+/* ══ АНИМАЦИЯ ФОНА ══ */
+(function(){
+  const cv=document.getElementById('bg');
+  const cx=cv.getContext('2d');
+  let W,H,t=0,nodes=[],leaves=[],waves=[];
+
+  function resize(){
+    W=cv.width=window.innerWidth;
+    H=cv.height=window.innerHeight;
+    init();
+  }
+
+  function init(){
+    nodes=Array.from({length:50},()=>({
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,
+      r:Math.random()*2+.8,o:Math.random()*.45+.1,
+      ph:Math.random()*Math.PI*2
+    }));
+    leaves=Array.from({length:28},()=>({
+      x:Math.random()*W,y:Math.random()*H,
+      size:Math.random()*4.5+2,
+      vy:Math.random()*.45+.07,vx:(Math.random()-.5)*.3,
+      rot:Math.random()*Math.PI*2,rotV:(Math.random()-.5)*.02,
+      o:Math.random()*.38+.07,ph:Math.random()*Math.PI*2
+    }));
+    waves=[
+      {y:.25,amp:22,freq:.01,speed:.015,o:.06},
+      {y:.5,amp:28,freq:.008,speed:.01,o:.05},
+      {y:.72,amp:16,freq:.013,speed:.019,o:.055},
+      {y:.88,amp:11,freq:.016,speed:.023,o:.04},
+    ];
+  }
+
+  function frame(){
+    t+=.016;
+    cx.clearRect(0,0,W,H);
+
+    // Орбы
+    [{px:.1,py:.2,r:.3,c:'20,90,30'},{px:.85,py:.65,r:.36,c:'40,120,45'},
+     {px:.5,py:.03,r:.22,c:'60,155,55'},{px:.06,py:.82,r:.24,c:'30,100,40'},
+     {px:.92,py:.18,r:.2,c:'50,135,60'}].forEach((o,i)=>{
+      const dx=Math.sin(t*.5+i*1.3)*W*.04,dy=Math.cos(t*.38+i*1.1)*H*.04;
+      const px=o.px*W+dx,py=o.py*H+dy,pr=o.r*Math.min(W,H);
+      const g=cx.createRadialGradient(px,py,0,px,py,pr);
+      g.addColorStop(0,`rgba(${o.c},.12)`);g.addColorStop(.5,`rgba(${o.c},.04)`);g.addColorStop(1,`rgba(${o.c},0)`);
+      cx.fillStyle=g;cx.beginPath();cx.arc(px,py,pr,0,Math.PI*2);cx.fill();
+    });
+
+    // Волны
+    waves.forEach((w,i)=>{
+      cx.beginPath();
+      for(let x=0;x<=W;x+=4){
+        const y=w.y*H+Math.sin(x*w.freq+t*w.speed*55+i)*w.amp;
+        x===0?cx.moveTo(x,y):cx.lineTo(x,y);
+      }
+      cx.strokeStyle=`rgba(80,180,75,${w.o})`;cx.lineWidth=1.5;cx.stroke();
+    });
+
+    // Сеть
+    nodes.forEach(n=>{n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;});
+    for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+      const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<130){cx.strokeStyle=`rgba(100,200,110,${(1-d/130)*.15})`;cx.lineWidth=.8;cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke();}
+    }
+    nodes.forEach(n=>{
+      const tw=Math.sin(t*1.4+n.ph)*.3+.7;
+      cx.globalAlpha=n.o*tw;cx.fillStyle='#7dc47f';
+      cx.beginPath();cx.arc(n.x,n.y,n.r,0,Math.PI*2);cx.fill();
+    });
+
+    // Листья
+    leaves.forEach(l=>{
+      l.y+=l.vy;l.rot+=l.rotV;l.x+=l.vx+Math.sin(t*.8+l.ph)*.4;
+      if(l.y>H+10){l.y=-10;l.x=Math.random()*W;}
+      if(l.x<-10)l.x=W+10;if(l.x>W+10)l.x=-10;
+      cx.globalAlpha=l.o*(Math.sin(t+l.ph)*.25+.75);
+      cx.save();cx.translate(l.x,l.y);cx.rotate(l.rot);
+      cx.fillStyle='#5db860';cx.beginPath();
+      cx.moveTo(0,-l.size);cx.lineTo(l.size*.5,0);cx.lineTo(0,l.size);cx.lineTo(-l.size*.5,0);
+      cx.closePath();cx.fill();cx.restore();
+    });
+
+    cx.globalAlpha=1;
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize',resize);
+  resize();frame();
+})();
+
+/* ══ SCROLL REVEAL ══ */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+
+</body>
+</html>
