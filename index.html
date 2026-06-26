@@ -12,8 +12,8 @@
   --paper:#f4f0e8;
   --mist:rgba(244,240,232,.06);
   --fog:rgba(244,240,232,.12);
-  --accent:#e8c547;
-  --accent2:#d4a843;
+  --accent:#c8a96e;
+  --accent2:#b8954f;
   --sub:rgba(244,240,232,.45);
   --sub2:rgba(244,240,232,.22);
 }
@@ -56,7 +56,7 @@ body{font-family:'Manrope',sans-serif;background:var(--ink);color:var(--paper);o
 .chip{font-size:11px;font-weight:500;color:var(--sub);border:1px solid rgba(244,240,232,.15);padding:7px 14px;border-radius:100px;letter-spacing:.04em}
 .hero-btn{display:inline-flex;align-items:center;gap:12px;font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:var(--accent);padding:18px 36px;border-radius:6px;text-decoration:none;transition:all .25s;border:none;cursor:pointer;align-self:flex-start}
 .hero-btn svg{transition:transform .25s}
-.hero-btn:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 16px 40px rgba(232,197,71,.2)}
+.hero-btn:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 16px 40px rgba(200,169,110,.2)}
 .hero-btn:hover svg{transform:translateX(5px)}
 
 /* RIGHT — фото во весь правый край */
@@ -307,7 +307,7 @@ addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>60));
   let W,H,t=0;
   const lines=Array.from({length:6},(_,i)=>({
     phase:i*1.1,speed:.004+i*.002,amp:.08+i*.03,y:.15+i*.14,
-    color:`rgba(232,197,71,${.018+i*.008})`
+    color:`rgba(200,169,110,${.018+i*.008})`
   }));
   const dots=Array.from({length:55},()=>({
     x:Math.random(),y:Math.random(),
@@ -344,7 +344,7 @@ addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>60));
         const a=dots[i],b=dots[j];
         const dist=Math.hypot((a.x-b.x)*W,(a.y-b.y)*H);
         if(dist<140){
-          cx.strokeStyle=`rgba(232,197,71,${(1-dist/140)*.08})`;
+          cx.strokeStyle=`rgba(200,169,110,${(1-dist/140)*.08})`;
           cx.lineWidth=.6;cx.beginPath();
           cx.moveTo(a.x*W,a.y*H);cx.lineTo(b.x*W,b.y*H);cx.stroke();
         }
@@ -352,7 +352,7 @@ addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>60));
     }
     dots.forEach(d=>{
       const tw=Math.sin(t*1.3+d.ph)*.25+.75;
-      cx.globalAlpha=d.o*tw;cx.fillStyle='#e8c547';
+      cx.globalAlpha=d.o*tw;cx.fillStyle='#c8a96e';
       cx.beginPath();cx.arc(d.x*W,d.y*H,d.r,0,Math.PI*2);cx.fill();
     });
     cx.globalAlpha=1;
